@@ -120,9 +120,9 @@ public class Fraction {
     @Override
     public boolean equals(Object other){
         if(other instanceof Fraction){
-            Fraction otherFrac = (Fraction) other; //cast other to fraction
-            otherFrac.toLowestTerms();
-            return (this.numerator == otherFrac.numerator)&&(this.denominator == otherFrac.denominator);
+            Fraction otherFraction = (Fraction) other; //cast other to fraction
+            otherFraction.toLowestTerms();
+            return (this.numerator == otherFraction.numerator)&&(this.denominator == otherFraction.denominator);
         } else { throw new InputMismatchException("Fraction parameter expected."); }
     }
 
@@ -144,7 +144,7 @@ public class Fraction {
      * @param den Integer for denominator
      * @return num, an int that is their greatest common divisor.
      */
-    public static int gcd(int num, int den) {
+    private static int gcd(int num, int den) {
         while (num!=0 && den!=0) {
             int remainder = num % den;
             num = den;
