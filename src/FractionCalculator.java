@@ -34,19 +34,19 @@ public class FractionCalculator {
 
     /**
      * Validate user input if it's a fraction or not
-     * @param input String from user
+     * @param fraction String from user
      * @return true if the parameter is in the form "a/b" where a is any int and b is any positive int
      */
-    public boolean validFraction(String input){
-        if (input.contains("-")){
-            input = input.replace("-","");
-            }
-        if (input.contains("/")) {
-            input = input.replace("/","");
+    public boolean validFraction(String fraction){
+        if (fraction.startsWith("-")){
+            fraction=fraction.substring(1,fraction.length());
         }
-        if (input.contains(" ")||input.charAt(input.indexOf("/")+1)==('0')){
-            valid = false;
-        } else {isNumber(input);}
+        if (fraction.contains(" ")||fraction.contains("-")||fraction.charAt(fraction.indexOf("/")+1)==('0')) {
+            valid=false;
+        } else if (fraction.contains("/")) {
+            fraction = fraction.replace("/", "");
+        }
+        isNumber(fraction);
         return valid;
     }
 
@@ -84,7 +84,6 @@ public class FractionCalculator {
             num = Integer.parseInt(fractionInput);
             den = 1;
         }
-
         Fraction fraction = new Fraction(num,den);
         return fraction;
     }
@@ -95,21 +94,22 @@ public class FractionCalculator {
      * @param f2
      * @return
      */
-    public String calculate(Fraction f1, Fraction f2, String op){
+    public Fraction calculate(Fraction f1, Fraction f2, String op){
         Fraction result = new Fraction();
-
         if (op.equals("*")){
             result = f1.multiply(f2);
         } else if (op.equals("/")){
-            if(f2.getNumerator()==0){
+            if (f2.getNumerator()==0){
                 System.out.println("Undefined.");
-            } else{ result = f1.divide(f1); }
+            } else{
+                result = f1.divide(f1);
+            }
         } else if (op.equals("+")){
             result = f1.add(f2);
-        } else if (op.equals("-")){
+        } else if (op.equals("-")) {
             result = f1.subtract(f2);
         }
-        return f1+" "+op+" "+f2+" = "+result;
+        return result;
     }
 
 
@@ -120,8 +120,6 @@ public class FractionCalculator {
         System.out.println("---------------------------------------------------------------------------------------------");
     }
 
-
-
     public static void main(String[] args) {
         FractionCalculator fractionCal = new FractionCalculator();
         fractionCal.intro();
@@ -130,10 +128,23 @@ public class FractionCalculator {
             String operation = fractionCal.getOperation();
             Fraction fraction1= fractionCal.getFraction();
             Fraction fraction2= fractionCal.getFraction();
+
             if (operation.equals("=")) {
                 System.out.println(fraction1 + " " + operation + " " + fraction2 + " is " + fraction1.equals(fraction2)+"\n");
             } else {
-                System.out.println(fractionCal.calculate(fraction1,fraction2,operation)+"\n");
+                Fraction result = fractionCal.calculate(fraction1,fraction2,operation);
+                if (result.getDenominator() < 0){
+                    result.setNumerator(result.getNumerator()*(-1));
+                    result.setDenominator(result.getDenominator()*(-1));
+                }
+                if (result.getNumerator() == 0){
+                    System.out.println(fraction1 + " " + operation + " " + fraction2 + " = 0\n");
+                } else if (result.getNumerator() % result.getDenominator() == 0) {
+                    System.out.println(fraction1+" "+ operation+" "+ fraction2 + " = " + (result.getNumerator()/result.getDenominator())+"\n");
+                }
+                else{
+                    System.out.println(fraction1 + " " + operation + " " + fraction2 + " = " + result.toString()+"\n");
+                }
             }
         }
     }
