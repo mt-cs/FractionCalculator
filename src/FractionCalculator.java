@@ -132,8 +132,15 @@ public class FractionCalculator {
                         break;
                 }
 
+                if (result.getDenominator() < 0) {
+                    result.setNumerator(result.getNumerator()*(-1));
+                    result.setDenominator(result.getDenominator()*(-1));
+                }
+
                 if (!resultStr.equals("")) {
                     System.out.println(fraction1 + " " + operation + " 0 = " + resultStr +"\n");
+                } else if (result.getNumerator() ==0) {
+                    System.out.println(fraction1+ " " + operation + " " + fraction2 + " = 0\n");
                 } else if (result.getNumerator() % result.getDenominator() == 0) {
                     System.out.println(fraction1 + " " + operation + " " + fraction2 + " = " + (result.getNumerator()/result.getDenominator())+"\n");
                 } else {

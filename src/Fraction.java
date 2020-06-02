@@ -49,11 +49,12 @@ public class Fraction {
      */
     public int getDenominator() { return denominator; }
 
-    public void setNumerator(int numerator){
-        this.numerator = numerator;
-    }
     public void setDenominator(int denominator) {
         this.denominator = denominator;
+    }
+
+    public void setNumerator(int numerator) {
+        this.numerator = numerator;
     }
 
     /**
@@ -122,7 +123,7 @@ public class Fraction {
      * Override the Object equals() method so that it accurately determines
      * whether or not two fractions are equal
      * @param other Object
-     * @return
+     * @return this fraction equals other fraction true or false
      */
     @Override
     public boolean equals(Object other){
@@ -141,8 +142,7 @@ public class Fraction {
             int gcd = gcd(numerator,denominator);
             numerator = numerator/gcd;
             denominator = denominator / gcd;
-        } else {numerator = 0;}
-
+        }
     }
 
     /**
